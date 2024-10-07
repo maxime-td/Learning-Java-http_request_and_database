@@ -1,3 +1,7 @@
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,10 +17,16 @@ public class Main {
         System.out.print("Votre choix : ");
     }
 
+    // Lit un stream
+
+
     public static void main(String[] argv) {
+
+        HttpURLConnection urlConnection = null;
 
         try {
             // Initialisation
+            URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=Clermont-Ferrand&appid=7ee0dd93945ae31985996d2cf2d1d95d&exclude=minutely,hourly,daily,alerts&units=metrics");
 
 
             // Boucle principale du programme
@@ -24,10 +34,13 @@ public class Main {
 
                 printMenu();
                 String ville = scanner.nextLine();
-                scanner.nextLine(); // Consomme le retour à la ligne restant
 
                 // Traitement du choix de l'utilisateur
+                urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                StreamReader.readStream(in);
                 // Appel à l'API
+                // https://api.openweathermap.org/data/2.5/weather?q=Clermont-Ferrand&appid=7ee0dd93945ae31985996d2cf2d1d95d&exclude=minutely,hourly,daily,alerts&units=metrics
 
             }
 
