@@ -26,14 +26,17 @@ public class Main {
 
         try {
             // Initialisation
-            URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=Clermont-Ferrand&appid=7ee0dd93945ae31985996d2cf2d1d95d&exclude=minutely,hourly,daily,alerts&units=metrics");
-
+            String urlPart1 = "https://api.openweathermap.org/data/2.5/weather?q=";
+            String urlPart2 = "&appid=7ee0dd93945ae31985996d2cf2d1d95d&exclude=minutely,hourly,daily,alerts&units=metrics";
 
             // Boucle principale du programme
             while (true) {
 
                 printMenu();
                 String ville = scanner.nextLine();
+
+                URL url = new URL(urlPart1 + ville + urlPart2);
+
 
                 // Traitement du choix de l'utilisateur
                 urlConnection = (HttpURLConnection) url.openConnection();
