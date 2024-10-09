@@ -33,18 +33,28 @@ public class MainTest {
 
         Main.main(new String[]{});
         assertTrue(Main.validCityBoolean);
-
     }
 
     @Test
     public void testInvalidCity() {
         String input = "InvalidCity\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
 
         Main.main(new String[]{});
         assertTrue(Main.invalidCityBoolean);
     }
 
+    @Test
+    public void testValidAndInvalidCity() {
+        String input = "Paris\nInvalidCity\n";
+        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        Main.main(new String[]{});
+        assertTrue(Main.validCityBoolean);
+        assertTrue(Main.invalidCityBoolean);
+    }
 
     @Test
     public void testEmptyInput() {
