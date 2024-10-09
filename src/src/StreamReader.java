@@ -17,6 +17,6 @@ public class StreamReader {
                 resultStringBuilder.append(line).append("\n");
             }
         }
-        System.out.println(resultStringBuilder.toString());
+        System.out.println(resultStringBuilder);
     }
 }

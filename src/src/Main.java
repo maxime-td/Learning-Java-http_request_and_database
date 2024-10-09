@@ -3,13 +3,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
     // Scanner pour lire les entrées de l'utilisateur
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
 
     // Affiche le menu principal à l'écran.
@@ -22,7 +21,7 @@ public class Main {
     public static void main(String[] argv) {
 
         // Initialisation de l'URL
-        HttpURLConnection urlConnection = null;
+        HttpURLConnection urlConnection;
 
         try {
             // Initialisation des parties de l'URL
@@ -58,7 +57,6 @@ public class Main {
 
         } catch (Exception e){
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
     }
 }
