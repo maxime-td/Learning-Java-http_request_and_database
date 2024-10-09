@@ -1,4 +1,5 @@
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -42,12 +43,16 @@ public class Main {
                     // Création de l'URL complète
                     URL url = new URL(urlPart1 + ville + urlPart2);
 
-                    // Récupération des informations
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                    try {
+                        // Récupération des informations
+                        urlConnection = (HttpURLConnection) url.openConnection();
+                        InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
-                    // Lecture du stream
-                    StreamReader.readStream(in);
+                        // Lecture du stream
+                        StreamReader.readStream(in);
+                    } catch (IOException e) {
+                        System.out.println("Erreur de lecture du ville " + ville);
+                    }
                 }
             }
 
