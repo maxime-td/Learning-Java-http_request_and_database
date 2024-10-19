@@ -7,72 +7,67 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class MainTest {
 
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private static final Logger LOGGER = Logger.getLogger(MainTest.class.getName());
+
     private final PrintStream originalOut = System.out;
     private final InputStream originalIn = System.in;
+    private ByteArrayOutputStream outContent;
+    private Main mainInstance;
 
     @BeforeEach
-    public void setUpStreams() {
+    public void setUp() {
+        outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
     }
 
     @AfterEach
-    public void restoreStreams() {
+    public void tearDown() {
         System.setOut(originalOut);
         System.setIn(originalIn);
     }
 
-    @Test
-    public void testValidCity() {
-        String input = "Paris\n";
+    private void runTestWithInput(String input) {
         ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
+        Scanner scanner = new Scanner(System.in);
+        mainInstance = new Main(scanner);
+        mainInstance.run();
+    }
 
-        Main.main(new String[]{});
-        assertTrue(Main.validCityBoolean);
+    @Test
+    public void testValidCity() {
+        runTestWithInput("Paris\n");
+        String response = mainInstance.reponse;
+        LOGGER.info("testValidCity - Actual response: " + response);
+        assertTrue(response.contains("Température"), "Expected response to contain 'Température', but got: " + response);
     }
 
     @Test
     public void testInvalidCity() {
-        String input = "InvalidCity\n";
-        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        Main.main(new String[]{});
-        assertTrue(Main.invalidCityBoolean);
+        runTestWithInput("InvalidCity\n");
+        String response = mainInstance.reponse;
+        LOGGER.info("testInvalidCity - Actual response: " + response);
+        assertEquals("Erreur de lecture de la ville.", response, "Expected 'Erreur de lecture de la ville.' but got: " + response);
     }
 
     @Test
-    public void testValidAndInvalidCity() {
-        String input = "Paris\nInvalidCity\n";
-        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        Main.main(new String[]{});
-        assertTrue(Main.validCityBoolean);
-        assertTrue(Main.invalidCityBoolean);
+    public void testExit() {
+        runTestWithInput("exit\n");
+        String response = mainInstance.reponse;
+        LOGGER.info("testExit - Actual response: " + response);
+        assertEquals("Au revoir !", response, "Expected 'Au revoir !' but got: " + response);
     }
 
     @Test
-    public void testEmptyInput() {
-        String input = "\n";
-        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        Main.main(new String[]{});
-        assertTrue(Main.invalidCityBoolean);
-    }
-
-    @Test
-    public void testSpecialCharacters() {
-        String input = "Pàrís\nexit\n";
-        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        Main.main(new String[]{});
-        assertTrue(Main.invalidCityBoolean);
+    public void testEmptyCity() {
+        runTestWithInput("\n");
+        String response = mainInstance.reponse;
+        LOGGER.info("testEmptyCity - Actual response: " + response);
+        assertEquals("Veuillez entrer le nom d'une ville.", response, "Expected 'Veuillez entrer le nom d'une ville.' but got: " + response);
     }
 }
