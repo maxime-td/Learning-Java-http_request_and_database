@@ -5,6 +5,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class Main {
 
     private String ville = "";
@@ -49,9 +53,6 @@ public class Main {
         }
     }
 
-    public String getReponse() {
-        return reponse;
-    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
