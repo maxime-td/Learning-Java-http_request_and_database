@@ -19,7 +19,7 @@ public class CreationBaseMain {
                 System.out.println("Base créée.");
             }
 
-            /*
+
             // Création de la table
             String sql = "CREATE TABLE IF NOT EXISTS temperature (" +
                     "timestamp TIMESTAMP NOT NULL," +
@@ -30,7 +30,7 @@ public class CreationBaseMain {
             Statement stmt = conn.createStatement();
                 stmt.execute(sql);
                 System.out.println("La table a été créée.");
-             */
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
