@@ -5,15 +5,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 
 public class Main {
 
     private String ville = "";
-    public String reponse = null;
     private Scanner scanner;
 
     private static final String URL_PART1 = "https://api.openweathermap.org/data/2.5/weather?q=";
@@ -34,23 +29,29 @@ public class Main {
             ville = scanner.nextLine();
 
             if (ville.isEmpty()) {
-                reponse = "Veuillez entrer le nom d'une ville.";
+                System.out.println("Veuillez entrer le nom d'une ville.");
+
             } else if (ville.equals("exit")) {
-                reponse = "Au revoir !";
+                System.out.println("Au revoir !");
+
             } else {
                 try {
-                    URL url = new URL(URL_PART1 + ville + URL_PART2);
-                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                    reponse = StreamReader.readStream(in, ville);
+                    boolean retourBase = Base.main(ville, 444.4f);
+
+                    if (retourBase) {
+                        URL url = new URL(URL_PART1 + ville + URL_PART2);
+                        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                        InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                        float reponse = StreamReader.readStream(in, ville);
+                        boolean unused = Base.main(ville, reponse);
+                        System.out.println(String.format("Température à %s: %.1f°C", ville, reponse));
+                    }
                 } catch (IOException e) {
-                    reponse = "Erreur de lecture de la ville.";
+                    System.out.println("Erreur de lecture de la ville.");
                 }
             }
-            System.out.println(reponse);
         } catch (Exception e) {
-            reponse = "Erreur : " + e.getMessage();
-            System.out.println(reponse);
+            System.out.println("Erreur : " + e.getMessage());
         }
     }
 

@@ -7,13 +7,13 @@ import javax.json.JsonReader;
 
 public class StreamReader {
 
-    public static String readStream(InputStream inputStream, String ville) throws IOException {
+    public static float readStream(InputStream inputStream, String ville) throws IOException {
         try (JsonReader jsonReader = Json.createReader(new InputStreamReader(inputStream))) {
             JsonObject jsonObject = jsonReader.readObject();
             JsonObject main = jsonObject.getJsonObject("main");
 
             double temperature = main.getJsonNumber("temp").doubleValue();
-            return String.format("Température à %s: %.1f°C", ville, temperature);
+            return (float)temperature;
         }
     }
 }
