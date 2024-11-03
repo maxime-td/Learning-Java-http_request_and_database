@@ -9,8 +9,9 @@ import java.util.Scanner;
 public class Main {
 
     private String ville = "";
-    private Scanner scanner;
-    public String reponseString;
+    private final Scanner scanner;
+    public String reponseString = "vide";
+    public float reponse = 44;
 
     private static final String URL_PART1 = "https://api.openweathermap.org/data/2.5/weather?q=";
     private static final String URL_PART2 = "&appid=7ee0dd93945ae31985996d2cf2d1d95d&exclude=minutely,hourly,daily,alerts&units=metric";
@@ -39,17 +40,23 @@ public class Main {
 
             } else {
                 try {
-                    boolean retourBase = Base.main(ville, 444.4f);
+                    float reponseBase = Base.main(ville, 444.4f);
 
-                    if (retourBase) {
+                    if (reponseBase == -44.4f) {
+                        reponse = 0;
                         URL url = new URL(URL_PART1 + ville + URL_PART2);
                         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                         InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                        float reponse = StreamReader.readStream(in, ville);
-                        boolean unused = Base.main(ville, reponse);
+                        reponse = StreamReader.readStream(in, ville);
+                        float unused = Base.main(ville, reponse);
                         reponseString = String.format("Température à %s: %.1f°C", ville, reponse);
                         System.out.println(reponseString);
+
+                    } else {
+                        reponseString = String.format("Température à %s: %.1f°C", ville, reponseBase);
+                        System.out.println(reponseString);
                     }
+
                 } catch (IOException e) {
                     reponseString = "Nom de ville invalide ou connexion internet indisponible.";
                     System.out.println(reponseString);

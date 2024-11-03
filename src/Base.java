@@ -25,7 +25,7 @@ public class Base {
         float temp = 444.4f;
         ResultSet rs = stmt.executeQuery("SELECT * FROM temperature WHERE ville = '" + inputVille + "'");
         while (rs.next()) {
-            if ((timestamp.getTime() - rs.getLong("timestamp")) < 4000000) { // 4k secondes ~ 1h
+            if ((timestamp.getTime() - rs.getLong("timestamp")) < 4000000) { // 4k secondes ~ 1h 4000000 999999999
                 temp = rs.getFloat("temperature");
             }
         }
@@ -35,8 +35,8 @@ public class Base {
 
 
     // Main = création/connexion BD
-    public static boolean main(String ville, float temperat) {
-        boolean retour = false;
+    public static float main(String ville, float temperat) {
+        float retour = 0.0f;
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -70,9 +70,10 @@ public class Base {
                 float temp = lireTemperatures(stmt, ville, timestamp);
 
                 if (temp == 444.4f) { // Pas de valeur dans la BD
-                    retour = true; // Instruction besoin request
+                    retour = -44.4f; // Instruction besoin request
+
                 } else {
-                    System.out.println(String.format("Température à %s: %.1f°C", ville, temp));
+                    retour = temp;
                 }
 
             } else { // Ajout de la températures
