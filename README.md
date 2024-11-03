@@ -7,6 +7,7 @@ Il s'agit d'une application Java simple qui permet de connaitre la température 
 
 - Récupération d'informations sur OpenWeatherMap via HTTP
 - Affichage de la température en degré Celcius
+- Enregistrement des informations dans une base de données pour limiter les appels réseaux
 - Interface utilisateur en ligne de commande
 
 ## Utilisation
