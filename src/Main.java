@@ -10,6 +10,7 @@ public class Main {
 
     private String ville = "";
     private Scanner scanner;
+    public String reponseString;
 
     private static final String URL_PART1 = "https://api.openweathermap.org/data/2.5/weather?q=";
     private static final String URL_PART2 = "&appid=7ee0dd93945ae31985996d2cf2d1d95d&exclude=minutely,hourly,daily,alerts&units=metric";
@@ -29,10 +30,12 @@ public class Main {
             ville = scanner.nextLine();
 
             if (ville.isEmpty()) {
-                System.out.println("Veuillez entrer le nom d'une ville.");
+                reponseString = "Veuillez entrer le nom d'une ville.";
+                System.out.println(reponseString);
 
             } else if (ville.equals("exit")) {
-                System.out.println("Au revoir !");
+                reponseString = "Au revoir !";
+                System.out.println(reponseString);
 
             } else {
                 try {
@@ -44,10 +47,12 @@ public class Main {
                         InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                         float reponse = StreamReader.readStream(in, ville);
                         boolean unused = Base.main(ville, reponse);
-                        System.out.println(String.format("Température à %s: %.1f°C", ville, reponse));
+                        reponseString = String.format("Température à %s: %.1f°C", ville, reponse);
+                        System.out.println(reponseString);
                     }
                 } catch (IOException e) {
-                    System.out.println("Erreur de lecture de la ville.");
+                    reponseString = "Nom de ville invalide ou connexion internet indisponible.";
+                    System.out.println(reponseString);
                 }
             }
         } catch (Exception e) {

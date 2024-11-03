@@ -42,7 +42,7 @@ public class MainTest {
     @Test
     public void testValidCity() {
         runTestWithInput("Paris\n");
-        String response = mainInstance.reponse;
+        String response = mainInstance.reponseString;
         LOGGER.info("testValidCity - Actual response: " + response);
         assertTrue(response.contains("Température"), "Expected response to contain 'Température', but got: " + response);
     }
@@ -50,7 +50,7 @@ public class MainTest {
     @Test
     public void testInvalidCity() {
         runTestWithInput("InvalidCity\n");
-        String response = mainInstance.reponse;
+        String response = mainInstance.reponseString;
         LOGGER.info("testInvalidCity - Actual response: " + response);
         assertEquals("Erreur de lecture de la ville.", response, "Expected 'Erreur de lecture de la ville.' but got: " + response);
     }
@@ -58,7 +58,7 @@ public class MainTest {
     @Test
     public void testExit() {
         runTestWithInput("exit\n");
-        String response = mainInstance.reponse;
+        String response = mainInstance.reponseString;
         LOGGER.info("testExit - Actual response: " + response);
         assertEquals("Au revoir !", response, "Expected 'Au revoir !' but got: " + response);
     }
@@ -66,7 +66,7 @@ public class MainTest {
     @Test
     public void testEmptyCity() {
         runTestWithInput("\n");
-        String response = mainInstance.reponse;
+        String response = mainInstance.reponseString;
         LOGGER.info("testEmptyCity - Actual response: " + response);
         assertEquals("Veuillez entrer le nom d'une ville.", response, "Expected 'Veuillez entrer le nom d'une ville.' but got: " + response);
     }
