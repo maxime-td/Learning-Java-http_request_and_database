@@ -20,6 +20,11 @@ public class Languages {
         translations.put("temperature_output", new String[]{"Température à %s : %.1f°C", "Temperature in %s: %.1f°C"});
 
         translations.put("error", new String[]{"Nom de city invalide ou connexion internet indisponible.", "City name unavailable or no internet connection."});
+
+        translations.put("new_temp_to_base", new String[]{"Température ajoutée à la BD.", "Temperature added to the database."});
+        translations.put("base_created", new String[]{"La table a été créée.", "Temperature added to the database."});
+        translations.put("connection_to_db", new String[]{"Connexion à la base de données existante.", "Temperature added to the database."});
+
     }
 
     // index 0 = French, index 1 = English

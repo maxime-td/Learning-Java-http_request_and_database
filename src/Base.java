@@ -4,24 +4,26 @@ import java.sql.*;
 
 public class Base {
 
-    // Fonction pour voir si une BD existe ou pas
+    private static final Languages languages = new Languages();
+
+    // Function to see if the database exists or not
     private static boolean databaseExists() {
         File dbFile = new File("base.db");
         return dbFile.exists();
     }
 
 
-    // Fonction pour ajouter une ligne
-    private static void ajouterTemperature(Statement stmt, Timestamp timestamp, String ville, float temperature) throws SQLException {
+    // Function to add the temperature to the database
+    private static void addTemperature(Statement stmt, Timestamp timestamp, String ville, float temperature, int languageIndex) throws SQLException {
         String sql = "INSERT INTO temperature (timestamp, ville, temperature) " +
                 "VALUES (" + timestamp.getTime() + ", '" + ville + "', " + temperature + ")";
         stmt.execute(sql);
-        System.out.println("Température ajoutée à la BD.");
+        System.out.println(languages.getString("new_temp_to_base", languageIndex));
     }
 
 
-    // Fonction pour lire les valeurs
-    private static float lireTemperatures(Statement stmt, String inputVille, Timestamp timestamp) throws SQLException {
+    // Fouction to read the temperature
+    private static float readTemperature(Statement stmt, String inputVille, Timestamp timestamp) throws SQLException {
         float temp = 444.4f;
         ResultSet rs = stmt.executeQuery("SELECT * FROM temperature WHERE ville = '" + inputVille + "'");
         while (rs.next()) {
@@ -35,7 +37,7 @@ public class Base {
 
 
     // Main = création/connexion BD
-    public static float main(String ville, float temperat) {
+    public static float main(String ville, float temperat, int languageIndex) {
         float retour = 0.0f;
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -58,29 +60,29 @@ public class Base {
                         "ville TEXT NOT NULL," +
                         "temperature FLOAT NOT NULL" + ");";
                 stmt.execute(sql);
-                System.out.println("La table a été créée.");
+                System.out.println(languages.getString("base_created", languageIndex));
 
             } else {
                 conn = DriverManager.getConnection(url);
                 stmt = conn.createStatement();
-                System.out.println("Connexion à la base de données existante.");
+                System.out.println(languages.getString("connection_to_db", languageIndex));
             }
 
-            if (temperat == 444.4f) { // Lecture des températures
-                float temp = lireTemperatures(stmt, ville, timestamp);
+            if (temperat == 444.4f) { // Reads temperature
+                float temp = readTemperature(stmt, ville, timestamp);
 
-                if (temp == 444.4f) { // Pas de valeur dans la BD
-                    retour = -44.4f; // Instruction besoin request
+                if (temp == 444.4f) { // No valor in the database
+                    retour = -44.4f; // Instruction need of a request
 
                 } else {
                     retour = temp;
                 }
 
-            } else { // Ajout de la températures
-                ajouterTemperature(stmt, timestamp, ville, temperat);
+            } else { // Adds the temperature
+                addTemperature(stmt, timestamp, ville, temperat, languageIndex);
             }
 
-            // Fermeture des ressources
+            // Closing
             stmt.close();
             conn.close();
 

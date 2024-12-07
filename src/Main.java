@@ -52,7 +52,7 @@ public class Main {
             } else { // Valid input
                 try {
                     // Checks if the answer is in the database
-                    float reponseBase = Base.main(city, 444.4f);
+                    float reponseBase = Base.main(city, 444.4f, languageIndex);
 
                     if (reponseBase == -44.4f) { // If not in the database
                         response = 0;
@@ -64,7 +64,7 @@ public class Main {
 
                         response = StreamReader.readStream(in, city); // Parse the response
 
-                        float unused = Base.main(city, response); // Adds the response to the database
+                        float unused = Base.main(city, response, languageIndex); // Adds the response to the database
 
                         // Output
                         System.out.println(String.format(languages.getString("temperature_output", languageIndex), city, response));
