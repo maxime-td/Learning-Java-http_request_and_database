@@ -41,8 +41,7 @@ public class Main {
                 System.out.println(languages.getString("empty_input", languageIndex));
 
             } else if (city.equals("exit")) { // Exit input
-                responseString = "Au revoir !";
-                System.out.println(responseString);
+                System.out.println(languages.getString("exit_input", languageIndex));
 
             } else if (city.equals("english")) { // Change language to english
                 languageIndex = 1;
@@ -52,30 +51,34 @@ public class Main {
 
             } else { // Valid input
                 try {
+                    // Checks if the answer is in the database
                     float reponseBase = Base.main(city, 444.4f);
 
-                    if (reponseBase == -44.4f) {
+                    if (reponseBase == -44.4f) { // If not in the database
                         response = 0;
-                        URL url = new URL(URL_PART1 + city + URL_PART2);
+                        URL url = new URL(URL_PART1 + city + URL_PART2); // Creates the full URL
+
+                        // Gets the response from the website
                         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                         InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                        response = StreamReader.readStream(in, city);
-                        float unused = Base.main(city, response);
-                        responseString = String.format("Température à %s: %.1f°C", city, response);
-                        System.out.println(responseString);
 
-                    } else {
-                        responseString = String.format("Température à %s: %.1f°C", city, reponseBase);
-                        System.out.println(responseString);
+                        response = StreamReader.readStream(in, city); // Parse the response
+
+                        float unused = Base.main(city, response); // Adds the response to the database
+
+                        // Output
+                        System.out.println(String.format(languages.getString("temperature_output", languageIndex), city, response));
+
+                    } else { // If in the database
+                        System.out.println(String.format(languages.getString("temperature_output", languageIndex), city, reponseBase));
                     }
 
                 } catch (IOException e) {
-                    responseString = "Nom de city invalide ou connexion internet indisponible.";
-                    System.out.println(responseString);
+                    System.out.println(languages.getString("error", languageIndex));
                 }
             }
         } catch (Exception e) {
-            System.out.println("Erreur : " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 

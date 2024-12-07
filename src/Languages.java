@@ -14,6 +14,12 @@ public class Languages {
         translations.put("menu_3_choice", new String[]{"Votre choix : ", "Your choice: "});
 
         translations.put("empty_input", new String[]{"Veuillez entrer le nom d'une ville.", "Please enter a city name."});
+
+        translations.put("exit_input", new String[]{"Au revoir !", "Good bye!"});
+
+        translations.put("temperature_output", new String[]{"Température à %s : %.1f°C", "Temperature in %s: %.1f°C"});
+
+        translations.put("error", new String[]{"Nom de city invalide ou connexion internet indisponible.", "City name unavailable or no internet connection."});
     }
 
     // index 0 = French, index 1 = English
