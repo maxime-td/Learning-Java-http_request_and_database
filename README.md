@@ -1,6 +1,8 @@
-# Projet Température
+# Projet Température (Requête HTTP et base de donnée)
 
-Ce projet a été réalisé par Maxime Thoumin, dans le cadre du cours de programmation objet avancée avec Olivier Goutet.
+[English version](README_EN.md)
+
+Ce projet a été réalisé par Maxime Thoumin, dans le cadre du cours de programmation objet avancée.
 Il s'agit d'une application Java simple qui permet de connaitre la température dans la ville souhaitée.
 
 ## Fonctionnalités
@@ -16,4 +18,5 @@ Pour lancer l'application, exécutez la classe Main du projet. Suivez ensuite le
 
 Le menu principal vous permettra de :
 1. Afficher la température de la ville souhaitée
-2. Quitter l'application
+2. Changer la langue
+3. Quitter l'application
