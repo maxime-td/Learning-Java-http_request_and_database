@@ -42,7 +42,7 @@ public class MainTest {
     @Test
     public void testValidCity() {
         runTestWithInput("paris\n");
-        String response = mainInstance.reponseString;
+        String response = mainInstance.responseString;
         LOGGER.info("testValidCity - Actual response: " + response);
         assertTrue(response.contains("Température"), "Expected response to contain 'Température', but got: " + response);
     }
@@ -50,7 +50,7 @@ public class MainTest {
     @Test
     public void testInvalidCity() {
         runTestWithInput("InvalidCity\n");
-        String response = mainInstance.reponseString;
+        String response = mainInstance.responseString;
         LOGGER.info("testInvalidCity - Actual response: " + response);
         assertEquals("Nom de ville invalide ou connexion internet indisponible.", response, "Expected 'Erreur de lecture de la ville.' but got: " + response);
     }
@@ -58,7 +58,7 @@ public class MainTest {
     @Test
     public void testExit() {
         runTestWithInput("exit\n");
-        String response = mainInstance.reponseString;
+        String response = mainInstance.responseString;
         LOGGER.info("testExit - Actual response: " + response);
         assertEquals("Au revoir !", response, "Expected 'Au revoir !' but got: " + response);
     }
@@ -66,7 +66,7 @@ public class MainTest {
     @Test
     public void testEmptyCity() {
         runTestWithInput("\n");
-        String response = mainInstance.reponseString;
+        String response = mainInstance.responseString;
         LOGGER.info("testEmptyCity - Actual response: " + response);
         assertEquals("Veuillez entrer le nom d'une ville.", response, "Expected 'Veuillez entrer le nom d'une ville.' but got: " + response);
     }
@@ -75,8 +75,8 @@ public class MainTest {
     @Test
     public void testValeurTemperature() {
         runTestWithInput("paris\n");
-        String response = mainInstance.reponseString;
+        String response = mainInstance.responseString;
         LOGGER.info("testValeurTemperature - Actual response: " + response);
-        assertTrue((-10.0f < mainInstance.reponse) || (mainInstance.reponse < 40.0f), "Expected response to be between -10.0 and 40.0°C, but got: " + response);
+        assertTrue((-10.0f < mainInstance.response) || (mainInstance.response < 40.0f), "Expected response to be between -10.0 and 40.0°C, but got: " + response);
     }
 }
